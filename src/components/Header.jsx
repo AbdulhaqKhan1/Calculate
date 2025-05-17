@@ -1,35 +1,68 @@
-import React from 'react'
+import React, { useState } from 'react';
 
 const Header = () => {
+  const [firstNumber, setFirstNumber] = useState('');
+  const [secondNumber, setSecondNumber] = useState('');
+  const [operator, setOperator] = useState('plus');
+  const [result, setResult] = useState('');
+
+  const calculate = () => {
+    const num1 = parseFloat(firstNumber);
+    const num2 = parseFloat(secondNumber);
+
+    let answer;
+
+    if (operator === 'plus') {
+    answer = num1 + num2;
+    } else if (operator === 'minus') {
+    answer = num1 - num2;
+    } else if (operator === 'multiply') {
+    answer = num1 * num2;
+    } else if (operator === 'divide') {
+    answer = num1 / num2;
+
+    }
+
+    setResult(answer);
+  };
+
   return (
-    <div>
-      <h1 className='text-white text-6xl mt-6 ml-6'>Calculator</h1>
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center px-4">
+      <h1 className="text-4xl font-bold mb-8 text-gray-800">Calculator</h1>
 
-    <input className='flex justify-center items-center h-16 w-132 mx-auto mt-16' type="text"
-    id="screen"/>
+      <input type="text" value={result} className="text-center text-2xl font-semibold w-full max-w-md mb-6 p-4 rounded-lg border border-gray-300 bg-white shadow" placeholder="Result"
+      />
 
-  <div className='mt-8 h-12 flex gap-68 justify-center items-center w-132 mx-auto'>
-        <input className="bg-white h-12 text-center rounded-xl" type="number"
-    placeholder="first value" id="firstNum"/>
+      <div className="flex flex-col md:flex-row gap-4 w-full max-w-md mb-4">
+        <input type="number" value={firstNumber} onChange={(e) => setFirstNumber(e.target.value)} placeholder="First Number" className="flex-1 p-3 rounded-lg border border-gray-300 bg-white shadow text-center"
+        />
 
-    <input class="bg-white h-12 text-center rounded-xl" type="number"
-       placeholder="second value" id="secondNum"/>
+        <input type="number" value={secondNumber} onChange={(e) => setSecondNumber(e.target.value)}
+          placeholder="Second Number" className="flex-1 p-3 rounded-lg border border-gray-300 bg-white shadow text-center"
+        />
+      </div>
 
+      <select
+        value={operator} onChange={(e) => setOperator(e.target.value)} className="w-full max-w-md mb-6 p-3 rounded-lg border border-gray-300 bg-white shadow text-xl text-center"
+      >
+
+        <option value="plus">+</option>
+        <option value="minus">-</option>
+        <option value="multiply">×</option>
+        <option value="divide">÷</option>
+        <option value="factorial">!</option>
+
+      </select>
+
+      <button
+        onClick={calculate}
+        className="bg-blue-500 text-white px-6 py-3 rounded-lg shadow"
+      >
+
+        Calculate
+      </button>
     </div>
+  );
+};
 
-    <select className='mt-24 h-12 flex gap-68 justify-center items-center w-68 mx-auto mt-16 bg-white rounded-xl text-4xl' id="operator">
-         <option disabled selected>Select operator</option>   
-                 
-         <option value="plus">+</option>
-
-         <option value="minus">-</option>
-   
-       </select>
-
-       <button className='mt-24 h-12 flex gap-68 justify-center items-center w-32 mx-auto mt-12 bg-white rounded-xl' onclick="calculateNumber()">Calculate</button>
-    
-    </div>
-  )
-}
-
-export default Header
+export default Header;
